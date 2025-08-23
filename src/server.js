@@ -12,6 +12,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import router from './routers/index.js';
+
 const PORT = process.env.PORT || 5000;
 
 export async function setupServer() {
@@ -41,6 +43,8 @@ export async function setupServer() {
   });
 
   app.use('/recipes', recipesRouter);
+
+  app.use(router); // Марчук Я. тут підключаємо один роутер, де в нас будуть всі роути
 
   // Хендлери
   app.use(notFoundHandler);
