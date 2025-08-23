@@ -1,0 +1,51 @@
+{
+  "name": "nodejs-hw-mongodb",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview",
+    "lint": "eslint src/**/*.js",
+    "start": "node ./src/index.js",
+    "dev": "nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmitrokaniuchok/nodejs-hw-mongodb.git"
+  },
+  "keywords": [],
+  "author": "Dmytro Kaniuchok <kanyuchekdmitry@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmitrokaniuchok/nodejs-hw-mongodb/issues"
+  },
+  "homepage": "https://github.com/dmitrokaniuchok/nodejs-hw-mongodb#readme",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@redocly/cli": "^2.0.2",
+    "eslint": "^9.30.1",
+    "globals": "^16.3.0",
+    "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^1.41.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^7.0.5",
+    "pino-http": "^10.5.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
