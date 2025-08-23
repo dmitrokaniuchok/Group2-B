@@ -1,33 +1,27 @@
 openapi: 3.1.0
 info:
   version: 1.0.0
-  title: MyApp API
+  title: Tasteorama
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  description: API documentation for the Contacts book application
+  description: This is an app for saving and adding recipes.
 
 tags:
-  - name: contacts
-    description: Contact operations
+  - name: Auth
+    description: Registration and authentication
+  - name: Users
+    description: User information
+  - name: Categories
+    description: Recipe Categories
+  - name: Ingridients
+    description: Ingridients
+  - name: Recipes
+    description: Recipes operation
 
 servers:
-  - url: http://localhost:3000
-  - url: https://nodejs-hw-mongodb-swagger-e07g.onrender.com
-
-paths:
-  /contacts:
-    get:
-      $ref: ../swagger/paths/contacts/get.yaml
-    post:
-      $ref: ../swagger/paths/contacts/post.yaml
-  /contacts/{contactId}:
-    get:
-      $ref: ../swagger/paths/contacts/{id}/get.yaml
-    patch:
-      $ref: ../swagger/paths/contacts/{id}/patch.yaml
-    delete:
-      $ref: ../swagger/paths/contacts/{id}/delete.yaml
+  - url: http://localhost:5000
+  - url:
 
 components:
   securitySchemes:
