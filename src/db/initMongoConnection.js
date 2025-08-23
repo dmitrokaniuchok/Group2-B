@@ -6,7 +6,7 @@ export async function initMongoConnection() {
       process.env;
 
     await mongoose.connect(
-      `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?retryWrites=true&w=majority&appName=Cluster0`,
+      `mongodb+srv://${MONGODB_USER}:${MONGODB_PASSWORD}@${MONGODB_URL}/${MONGODB_DB}?retryWrites=true&w=majority&appName=ClusterRecipes`,
     );
 
     console.log('Mongo connection successfully established!');
