@@ -1,4 +1,4 @@
-import Recipes from '../models/Recipe.js';
+import Recipes from '../db/models/Recipe.js';
 
 export const getRecipeByIdService = async (recipeId) => {
   const recipe = await Recipes.findById(recipeId);

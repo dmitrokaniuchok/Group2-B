@@ -21,7 +21,7 @@ tags:
 
 servers:
   - url: http://localhost:5000
-  - url:
+  - url: https://group2-b.onrender.com
 
 components:
   securitySchemes:

@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { isValidIdRecipe } from '../middlewares/isValidIdRecipe.js';
 
-import { getRecipeByIdController } from '../controllers/recipesControllers.js';
+import { getRecipeByIdController } from '../controllers/recipeControllers.js';
 
 const router = Router();
 
