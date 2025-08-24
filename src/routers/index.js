@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import recipeRouter from './recipesRouters.js';
+import recipesRouter from './recipesRouters.js';
 import profileRouter from './profileRouters.js';
 import favoritesRouter from './favoritesRouter.js';
 
@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
   res.send('Server is working!');
 }); // Тестовий маршрут
 
-router.use('/recipes', recipeRouter);
+router.use('/recipes', recipesRouter);
 router.use('/profile', profileRouter);
 router.use('/favorites', favoritesRouter);
 
