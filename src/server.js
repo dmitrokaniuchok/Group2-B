@@ -5,7 +5,8 @@ import cookieParser from 'cookie-parser';
 
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
-import recipesRouter from './routers/recipes.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+
 import router from './routers/index.js';
 import ingredientsRoutes from './routers/ingredients.js';
 import categoriesRoutes from './routers/categories.js';
@@ -24,11 +25,10 @@ export async function setupServer() {
 
   // Підключення всіх маршрутів через глобальний роутер
   app.use(router);
-  router.use('/recipes', recipesRouter);
-  router.use("/ingredients", ingredientsRoutes);
-  router.use("/categories",categoriesRoutes);
+
 
   app.use(notFoundHandler);
+  app.use(errorHandler);
 
   app.listen(PORT, (error) => {
     if (error) throw error;
