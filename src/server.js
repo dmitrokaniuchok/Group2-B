@@ -6,8 +6,10 @@ import cookieParser from 'cookie-parser';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { recipesRouter } from './routers/recipesRouters.js';
 
 import router from './routers/index.js';
+import auth from './routers/auth.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,13 +26,8 @@ export async function setupServer() {
   // Підключення всіх маршрутів через глобальний роутер
   app.use(router);
 
-  app.use((err, req, res, next) => {
-    console.error(err); // в консолі буде реальна помилка
-    res.status(err.status || 500).json({
-      status: err.status || 500,
-      message: err.message || 'Server Error',
-    });
-  });
+  router.use('/recipes', recipesRouter);
+  router.use('/auth', auth);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
