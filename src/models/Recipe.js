@@ -9,11 +9,11 @@ const recipesSchema = new Schema(
     category: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'categories',
+      ref: 'Categories',
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
     },
     area: {
       type: String,
@@ -39,7 +39,7 @@ const recipesSchema = new Schema(
       {
         id: {
           type: Schema.Types.ObjectId,
-          ref: 'ingredients',
+          ref: 'Ingredient',
           required: true,
         },
         measure: { type: String, required: true },
