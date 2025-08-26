@@ -1,5 +1,5 @@
-import Users from '../db/models/User.js';
-import Recipes from '../db/models/Recipe.js';
+import Users from '../models/User.js';
+import Recipes from '../models/Recipe.js';
 
 export const addRecipeToFavoritesService = async (userId, recipeId) => {
   const user = await Users.findById(userId);

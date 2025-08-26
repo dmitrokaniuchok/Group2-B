@@ -1,39 +1,18 @@
-import Recipes from '../db/models/Recipe.js';
+import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { paginate } from '../utils/paginate.js';
+import { searchRecipes } from '../services/getRecipesServices.js';
 
 export const getRecipesController = async (req, res, next) => {
   try {
-    const page = parseInt(req.query.page ?? '1', 10);
-    const perPage = parseInt(req.query.limit ?? '12', 10);
-    const limit = Math.min(Math.max(perPage, 1), 100);
-    const currentPage = Math.max(page, 1);
+    const { page, perPage } = paginate(req.query);
+    const filter = parseFilterParams(req.query);
 
-    const filter = {};
-    const { title, category, ingredient } = req.query;
+    const data = await searchRecipes({ filter, page, perPage });
 
-    if (title) filter.title = { $regex: title, $options: 'i' };
-    if (category) filter.category = { $regex: category, $options: 'i' };
-    if (ingredient) filter['ingredients.id'] = ingredient;
-
-    const [totalItems, items] = await Promise.all([
-      Recipes.countDocuments(filter),
-      Recipes.find(filter)
-        .sort({ createdAt: -1 })
-        .skip((currentPage - 1) * limit)
-        .limit(limit)
-        .lean(),
-    ]);
-
-    const normalized = items.map(({ _id, ...rest }) => ({
-      id: _id.toString(),
-      ...rest,
-    }));
-
-    res.status(200).json({
+    res.json({
       status: 200,
-      message: 'Recipes successfully found',
-      data: normalized,
-      ...paginate({ totalItems, page: currentPage, perPage: limit }),
+      message: 'Recipes retrieved successfully',
+      data,
     });
   } catch (err) {
     next(err);

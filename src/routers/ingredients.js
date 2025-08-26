@@ -1,9 +1,10 @@
 import { Router } from 'express';
+
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { getIngridients } from '../controllers/ingredientController.js';
+import { getIngredientController } from '../controllers/ingredient.js';
 
 const router = Router();
 
-router.get('/', ctrlWrapper(getIngridients));
+router.get('/', ctrlWrapper(getIngredientController));
 
 export default router;
