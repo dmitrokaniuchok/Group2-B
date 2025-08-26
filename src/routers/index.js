@@ -5,15 +5,18 @@ import profileRouter from './profileRouters.js';
 import favoritesRouter from './favoritesRouter.js';
 import categories from './categories.js';
 import ingredients from './ingredients.js';
-// import userRoutes from './userRoutes.js';
+import auth from './auth.js';
+import addRecipeRouter from './AddRecipeRoutes.js';
 
 const router = Router();
 
-// router.use('/users', userRoutes);
+router.use('/auth', auth);
 router.use('/categories', categories);
 router.use('/ingredients', ingredients);
 router.use('/profile', profileRouter);
 router.use('/favorites', favoritesRouter);
 router.use('/recipes', recipesRouter);
+router.use('/recipes', recipesRouter);
+router.use('/recipes/add', addRecipeRouter);
 
 export default router;

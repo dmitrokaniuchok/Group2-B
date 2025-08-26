@@ -1,4 +1,3 @@
-// src/utils/parseFilterParams.js
 import mongoose from 'mongoose';
 
 export const parseFilterParams = (query) => {
