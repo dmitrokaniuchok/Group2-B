@@ -1,16 +1,15 @@
-import { model, Schema } from 'mongoose';
 
-const ingredientSchema = new Schema(
+import mongoose from 'mongoose';
+
+const ingredientSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  desc: { type: String, required: true },
+  img: { type: String },
+   },
   {
-    name: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      lowercase: true,
-    },
+    timestamps: true,
+    versionKey: false,
   },
-  { versionKey: false, timestamps: false },
-);
+});
 
-export const Ingredient = model('Ingredient', ingredientSchema);
+export const Ingredient = mongoose.model("Ingredient",ingredientSchema);

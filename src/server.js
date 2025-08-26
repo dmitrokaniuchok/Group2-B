@@ -8,6 +8,8 @@ import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 import router from './routers/index.js';
+import ingredientsRoutes from './routers/ingredients.js';
+import categoriesRoutes from './routers/categories.js';
 
 const PORT = process.env.PORT || 5000;
 
@@ -23,6 +25,7 @@ export async function setupServer() {
 
   // Підключення всіх маршрутів через глобальний роутер
   app.use(router);
+
 
   app.use(notFoundHandler);
   app.use(errorHandler);
