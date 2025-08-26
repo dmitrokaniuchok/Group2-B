@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import { recipesRouter } from './routers/recipesRouters.js';
+import recipesRouter from './routers/recipesRouters.js';
 
 import router from './routers/index.js';
 import auth from './routers/auth.js';
@@ -23,11 +23,11 @@ export async function setupServer() {
   app.use(express.json());
   app.use(cookieParser());
 
-  // Підключення всіх маршрутів через глобальний роутер
-  app.use(router);
-
   router.use('/recipes', recipesRouter);
   router.use('/auth', auth);
+
+  // Підключення всіх маршрутів через глобальний роутер
+  app.use(router);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
