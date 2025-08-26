@@ -1,4 +1,4 @@
-import Recipes from '../db/models/Recipe.js';
+import Recipes from '../models/Recipe.js';
 import { paginate } from '../utils/paginate.js';
 
 export const getRecipesController = async (req, res, next) => {

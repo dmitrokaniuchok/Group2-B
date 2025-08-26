@@ -1,4 +1,4 @@
-import User from '../db/models/User.js';
+import User from '../models/User.js';
 
 export async function getCurrentUserServices(userId) {
   const user = await User.findById(userId).select('name');
