@@ -9,3 +9,5 @@ const router = Router();
 router.get('/', ctrlWrapper(getCategoriesController));
 
 export default router;
+
+// +

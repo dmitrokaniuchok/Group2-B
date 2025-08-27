@@ -11,12 +11,12 @@ import addRecipeRouter from './AddRecipeRoutes.js';
 const router = Router();
 
 router.use('/auth', auth);
+router.use('/profile', profileRouter);
 router.use('/categories', categories);
 router.use('/ingredients', ingredients);
-router.use('/profile', profileRouter);
+console.log('Favorites router loaded');
 router.use('/favorites', favoritesRouter);
-router.use('/recipes', recipesRouter);
-router.use('/recipes', recipesRouter);
 router.use('/recipes/add', addRecipeRouter);
+router.use('/recipes', recipesRouter);
 
 export default router;

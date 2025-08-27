@@ -1,10 +1,10 @@
-import { addRecipeToFavoritesService } from '../services/addRecipesFavorites.js';
+import { addRecipeToFavoritesService } from '../services/addFavoritesService.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const addToFavoritesController = async (req, res) => {
   const favorites = await addRecipeToFavoritesService(
-    req.user.id,
-    req.params.id,
+    req.user._id,
+    req.params.recipeId,
   );
 
   res.status(200).json({

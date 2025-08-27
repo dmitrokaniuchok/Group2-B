@@ -1,8 +1,7 @@
-import createHttpError from "http-errors";
-import { getIngredient } from "../services/ingredient.js";
+import createHttpError from 'http-errors';
+import { getIngredient } from '../services/ingredient.js';
 
 export const getIngredientController = async (req, res) => {
-
   const ingredient = await getIngredient();
 
   if (!ingredient) {
@@ -15,3 +14,5 @@ export const getIngredientController = async (req, res) => {
     data: ingredient,
   });
 };
+
+// +

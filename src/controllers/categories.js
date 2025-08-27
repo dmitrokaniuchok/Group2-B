@@ -1,5 +1,5 @@
-import createHttpError from "http-errors";
-import { getCategories } from "../services/categories.js";
+import createHttpError from 'http-errors';
+import { getCategories } from '../services/categories.js';
 
 export const getCategoriesController = async (req, res) => {
   const categories = await getCategories();
@@ -14,3 +14,5 @@ export const getCategoriesController = async (req, res) => {
     data: categories,
   });
 };
+
+// +

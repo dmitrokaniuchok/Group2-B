@@ -8,3 +8,5 @@ const router = Router();
 router.get('/', ctrlWrapper(getIngredientController));
 
 export default router;
+
+// +

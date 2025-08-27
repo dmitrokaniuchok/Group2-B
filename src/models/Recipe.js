@@ -52,5 +52,5 @@ const recipesSchema = new Schema(
   },
 );
 
-const Recipes = model('recipes', recipesSchema);
+const Recipes = model('Recipe', recipesSchema);
 export default Recipes;

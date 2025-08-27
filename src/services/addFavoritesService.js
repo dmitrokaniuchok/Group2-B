@@ -3,7 +3,7 @@ import Recipe from '../models/Recipe.js';
 import createHttpError from 'http-errors';
 import mongoose from 'mongoose';
 
-export const removeRecipeFromFavoritesService = async (userId, recipeId) => {
+export const addRecipeToFavoritesService = async (userId, recipeId) => {
   if (
     !mongoose.Types.ObjectId.isValid(userId) ||
     !mongoose.Types.ObjectId.isValid(recipeId)
@@ -20,18 +20,17 @@ export const removeRecipeFromFavoritesService = async (userId, recipeId) => {
 
   if (!recipe) throw createHttpError(404, 'Recipe not found');
 
-  if (
-    !user.favorites?.some((favId) => favId.toString() === recipeId.toString())
-  ) {
-    throw createHttpError(409, 'Recipe is not in favorites');
+  if (user.favorites?.some((fav) => fav.toString() === recipeId.toString())) {
+    throw createHttpError(409, 'Recipe already in favorites');
   }
 
-  user.favorites = user.favorites.filter(
-    (favId) => favId.toString() !== recipeId.toString(),
+  user.favorites = [...(user.favorites || []), recipe._id];
+  await user.save();
+
+  const updatedUser = await User.findById(userId).populate(
+    'favorites',
+    '_id title category thumb',
   );
 
-  await user.save();
-  await user.populate('favorites', '_id title category thumb');
-
-  return user.favorites;
+  return updatedUser.favorites;
 };

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
+import { swaggerDocs } from './middlewares/swaggerDocs.js';
 
 import router from './routers/index.js';
 
@@ -21,8 +22,10 @@ export async function setupServer() {
   app.use(express.json());
   app.use(cookieParser());
 
+  app.use('/api-docs', swaggerDocs());
+
   // Підключення всіх маршрутів через глобальний роутер
-  app.use(router);
+  app.use('/', router);
 
   app.use(notFoundHandler);
   app.use(errorHandler);
