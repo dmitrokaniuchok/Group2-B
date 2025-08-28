@@ -1,4 +1,4 @@
-import { getOwnRecipesService } from '../services/profileServices.js';
+import { getOwnRecipesService } from '../services/getOwnRecipeServices.js';
 
 export const getOwnRecipesController = async (req, res, next) => {
   try {

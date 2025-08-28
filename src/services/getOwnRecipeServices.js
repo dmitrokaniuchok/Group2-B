@@ -1,4 +1,4 @@
-import Recipes from '../models/Recipe.js';
+import AddRecipe from '../models/AddRecipe.js';
 import { paginate } from '../utils/paginate.js';
 
 export const getOwnRecipesService = async (userId, page = 1, perPage = 12) => {
@@ -8,8 +8,8 @@ export const getOwnRecipesService = async (userId, page = 1, perPage = 12) => {
   const filter = { owner: userId };
 
   const [totalItems, items] = await Promise.all([
-    Recipes.countDocuments(filter),
-    Recipes.find(filter)
+    AddRecipe.countDocuments(filter),
+    AddRecipe.find(filter)
       .sort({ createdAt: -1 })
       .skip((currentPage - 1) * limit)
       .limit(limit)

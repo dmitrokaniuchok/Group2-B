@@ -1,24 +1,35 @@
-import Recipe from '../models/Recipe.js';
+import Recipes from '../models/Recipe.js';
+import { Ingredient } from '../models/Ingredient.js';
 
-export const searchRecipes = async ({ filter, page, perPage }) => {
-  const skip = (page - 1) * perPage;
+export const searchRecipesService = async (query) => {
+  const { category, ingredient, title, page = 1 } = query;
 
-  const recipes = await Recipe.find(filter)
-    .skip(skip)
-    .limit(perPage)
-    .sort({ createdAt: -1 })
-    .populate('category', 'name')
-    .populate('ingredients.id', 'name');
+  const pageNumber = Math.max(parseInt(page, 10), 1);
+  const limitNumber = 12;
+  const skip = (pageNumber - 1) * limitNumber;
 
-  const total = await Recipe.countDocuments(filter);
+  const filter = {};
 
-  return {
-    recipes,
-    pagination: {
-      page,
-      perPage,
-      total,
-      totalPages: Math.ceil(total / perPage),
-    },
-  };
+  if (category) {
+    filter.category = { $regex: category, $options: 'i' };
+  }
+
+  if (title) {
+    filter.title = { $regex: title, $options: 'i' };
+  }
+
+  if (ingredient) {
+    const ingredientIds = (
+      await Ingredient.find({ name: { $regex: ingredient, $options: 'i' } })
+    ).map((i) => i._id);
+
+    filter['ingredients'] = { $elemMatch: { id: { $in: ingredientIds } } };
+  }
+
+  const recipes = await Recipes.find(filter).skip(skip).limit(limitNumber);
+
+  const total = await Recipes.countDocuments(filter);
+  const totalPages = Math.ceil(total / limitNumber);
+
+  return { recipes, page: pageNumber, totalPages, total };
 };

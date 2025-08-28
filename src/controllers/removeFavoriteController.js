@@ -2,7 +2,6 @@ import { removeRecipeFromFavoritesService } from '../services/removeRecipeFromFa
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const removeFromFavoritesController = async (req, res) => {
-  console.log('Controller hit:', req.user._id, req.params.recipeId);
   const favorites = await removeRecipeFromFavoritesService(
     req.user._id,
     req.params.recipeId,

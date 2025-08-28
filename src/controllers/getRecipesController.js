@@ -1,20 +1,14 @@
-import { parseFilterParams } from '../utils/parseFilterParams.js';
-import { paginate } from '../utils/paginate.js';
-import { searchRecipes } from '../services/getRecipesServices.js';
+import { searchRecipesService } from '../services/getRecipesServices.js';
 
 export const getRecipesController = async (req, res, next) => {
   try {
-    const { page, perPage } = paginate(req.query);
-    const filter = parseFilterParams(req.query);
-
-    const data = await searchRecipes({ filter, page, perPage });
-
-    res.json({
+    const result = await searchRecipesService(req.query);
+    res.status(200).json({
       status: 200,
-      message: 'Recipes retrieved successfully',
-      data,
+      message: 'Recipes fetched successfully',
+      data: result,
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };

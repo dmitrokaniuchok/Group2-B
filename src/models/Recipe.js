@@ -7,9 +7,8 @@ const recipesSchema = new Schema(
       required: true,
     },
     category: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
-      ref: 'Categories',
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -38,7 +37,7 @@ const recipesSchema = new Schema(
     ingredients: [
       {
         id: {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: 'Ingredient',
           required: true,
         },

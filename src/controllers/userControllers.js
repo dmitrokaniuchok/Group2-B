@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { getCurrentUserService } from '../services/users.js';
+import { getCurrentUserService } from '../services/userServices.js';
 
 export async function getCurrentUserController(req, res) {
   const current = await getCurrentUserService(req.user.id);

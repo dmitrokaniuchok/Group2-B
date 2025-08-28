@@ -7,6 +7,11 @@ const recipeSchema = new mongoose.Schema(
     cookingTime: { type: Number, required: true },
     calories: Number,
     category: { type: String, required: true },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     ingredients: [
       {
         name: String,
