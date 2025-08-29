@@ -1,0 +1,54 @@
+path:
+  /Ingredient:
+    get:
+      tags:
+        - Ingredient
+      summary: Get all Ingredient
+      description: Retrieves a list of all Ingredient.
+      responses:
+        '200':
+          description: Successfully responses of Ingredient
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: 
+                  status:
+                    type: integer
+                    example: 200
+                data: 
+                  type: array
+                  items:
+                   type: object
+                   properties:
+                     _id:
+                       type: string
+                       description: The identificator of the Ingredient.
+                       example: "64d2a42f8c1b2e001f4d12cd"
+                     name: 
+                       type: string
+                       description: Name of the Ingredient
+                       example: "Tomato"
+                     desc:
+                       type: string
+                       description: Description Ingredient
+                       example: "Fresh red Tomato"
+                     img: 
+                       type: string
+                       description: URL image
+                       example: "http://example.com/tomato.jpg"
+                     createdAt:
+                       type: string
+                       format: data-time
+                     updatedAt:
+                       type: string
+                       format: data-time
+
+        '401':
+          $ref: '../../../components/responses/401.yaml'
+
+        '404':
+          $ref: '../../../components/responses/404.yaml'
+
+        '500':
+          $ref: '../../../components/responses/500.yaml'

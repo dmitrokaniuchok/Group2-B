@@ -1,0 +1,39 @@
+path:
+  /categories:
+    get:
+      tags:
+        - Categories
+      summary: Get all Categories
+      description: Retrieves a list of all categories.
+      responses:
+        '200':
+          description: Successfully responses of categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: integer
+                  example: 200
+                data:
+                  type:
+                  items:
+                    type: object
+                    properties:
+                       _id:
+                         type: string
+                         description: The identificator of the categories.
+                         example: "64d2a42f8c1b2e001f4d12cd"
+                       name: 
+                         type: string
+                         description: Name of the categories
+                         example: "Dessert"
+
+        '401':
+          $ref: '../../../components/responses/401.yaml'
+
+        '404':
+          $ref: '../../../components/responses/404.yaml'
+
+        '500':
+          $ref: '../../../components/responses/500.yaml'
