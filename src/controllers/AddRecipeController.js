@@ -1,17 +1,19 @@
-import Recipe from '../models/AddRecipe.js';
+import { addRecipeService } from '../services/addRecipeService.js';
 
-export const addRecipe = async (req, res) => {
+export const addRecipe = async (req, res, next) => {
   try {
-    const recipe = new Recipe({ ...req.body, owner: req.user._id });
-
-    await recipe.save();
+    const recipe = await addRecipeService({
+      body: req.body,
+      file: req.file,
+      userId: req.user._id,
+    });
 
     res.status(201).json({
       status: 201,
       message: 'Recipe created successfully',
-      data: recipe,
+      data: { recipe },
     });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    next(err);
   }
 };
