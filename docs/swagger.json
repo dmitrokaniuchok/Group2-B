@@ -2,34 +2,52 @@
   "openapi": "3.1.0",
   "info": {
     "version": "1.0.0",
-    "title": "MyApp API",
+    "title": "Tasteorama",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "description": "API documentation for the Contacts book application"
+    "description": "This is an app for saving and adding recipes."
   },
   "servers": [
     {
       "url": "http://localhost:5000"
     },
     {
-      "url": "https://nodejs-hw-mongodb-swagger-e07g.onrender.com"
+      "url": "https://group2-b.onrender.com"
     }
   ],
   "tags": [
     {
-      "name": "contacts",
-      "description": "Contact operations"
+      "name": "Auth",
+      "description": "Registration and authentication"
+    },
+    {
+      "name": "Users",
+      "description": "User information"
+    },
+    {
+      "name": "Categories",
+      "description": "Recipe Categories"
+    },
+    {
+      "name": "Ingridients",
+      "description": "Ingridients"
+    },
+    {
+      "name": "Recipes",
+      "description": "Recipes operation"
     }
   ],
   "paths": {
-    "/contacts": {
+    "/recipes/{recipeId}": {
       "get": {
-        "tags": ["contacts"],
-        "summary": "Get contacts list",
-        "operationId": "getContacts",
-        "description": "Retrieve contacts with filters and pagination",
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by id",
+        "operationId": "getRecipeById",
+        "description": "Get recipe by id",
         "security": [
           {
             "bearerAuth": []
@@ -37,64 +55,27 @@
         ],
         "parameters": [
           {
-            "in": "query",
-            "name": "page",
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1
-          },
-          {
-            "in": "query",
-            "name": "perPage",
-            "schema": {
-              "type": "integer",
-              "example": 10
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortBy",
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
             "schema": {
               "type": "string",
-              "example": "name"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sortOrder",
-            "schema": {
-              "type": "string",
-              "enum": ["asc", "desc"],
-              "example": "asc"
-            }
-          },
-          {
-            "in": "query",
-            "name": "name",
-            "schema": {
-              "type": "string",
-              "example": "John"
-            }
-          },
-          {
-            "in": "query",
-            "name": "contactType",
-            "schema": {
-              "type": "string",
-              "enum": ["work", "home", "personal"],
-              "example": "personal"
+              "example": "6462a8f74c3d0ddd28898051"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Contacts retrieved successfully",
+            "description": "Get recipe by id",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "required": ["status", "message", "data"],
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
                     "status": {
                       "type": "integer",
@@ -102,49 +83,11 @@
                     },
                     "message": {
                       "type": "string",
-                      "example": "Contacts retrieved successfully"
+                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28898051!"
                     },
                     "data": {
                       "type": "object",
-                      "required": [
-                        "data",
-                        "page",
-                        "perPage",
-                        "totalItems",
-                        "totalPages"
-                      ],
-                      "properties": {
-                        "data": {
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/ContactSchema"
-                          }
-                        },
-                        "page": {
-                          "type": "number",
-                          "example": 2
-                        },
-                        "perPage": {
-                          "type": "number",
-                          "example": 10
-                        },
-                        "totalItems": {
-                          "type": "number",
-                          "example": 20
-                        },
-                        "totalPages": {
-                          "type": "number",
-                          "example": 4
-                        },
-                        "hasNextPage": {
-                          "type": "boolean",
-                          "example": true
-                        },
-                        "hasPreviousPage": {
-                          "type": "boolean",
-                          "example": true
-                        }
-                      }
+                      "$ref": "#/components/schemas/recipe"
                     }
                   }
                 }
@@ -152,255 +95,13 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/Error401"
-          }
-        }
-      },
-      "post": {
-        "tags": ["contacts"],
-        "summary": "Create a new contact",
-        "operationId": "createContact",
-        "description": "Add a new contact",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "required": ["name", "email", "phoneNumber", "contactType"],
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "example": "+380981234567"
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "example": "john.doe@example.com"
-                  },
-                  "isFavourite": {
-                    "type": "boolean",
-                    "example": true
-                  },
-                  "contactType": {
-                    "type": "string",
-                    "enum": ["work", "home", "personal"],
-                    "example": "personal"
-                  },
-                  "photo": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Contact created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": ["status", "message", "data"],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 201
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Contact created successfully"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/ContactSchema"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "$ref": "#/components/responses/Error401"
+            "$ref": "#/components/responses/401"
           },
           "404": {
-            "$ref": "#/components/responses/Error404"
-          }
-        }
-      }
-    },
-    "/contacts/{contactId}": {
-      "get": {
-        "tags": ["contacts"],
-        "summary": "Get contact by id",
-        "operationId": "getContactById",
-        "description": "Get contact by unique id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Contact found successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ContactSchema"
-                }
-              }
-            }
+            "$ref": "#/components/responses/404"
           },
-          "404": {
-            "description": "Contact not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error404"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": ["contacts"],
-        "summary": "Update contact by id",
-        "operationId": "updateContactById",
-        "description": "Update contact data by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "64c4f2a5a2b5c7d9f8e4a123"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string",
-                    "example": "John Doe"
-                  },
-                  "phoneNumber": {
-                    "type": "string",
-                    "example": "+380981234567"
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "example": "john.doe@example.com"
-                  },
-                  "isFavourite": {
-                    "type": "boolean",
-                    "example": false
-                  },
-                  "contactType": {
-                    "type": "string",
-                    "enum": ["work", "home", "personal"]
-                  },
-                  "photo": {
-                    "type": "string",
-                    "format": "binary"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Contact updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": ["status", "message", "data"],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully updated a contact"
-                    },
-                    "data": {
-                      "$ref": "#/components/schemas/ContactSchema"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/components/responses/Error404"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["contacts"],
-        "summary": "Delete contact by id",
-        "operationId": "deleteContactById",
-        "description": "Delete a contact by id",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "contactId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "64c4f2a5a2b5c7d9f8e4a123"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No content"
-          },
-          "401": {
-            "$ref": "#/components/responses/Error401"
-          },
-          "404": {
-            "$ref": "#/components/responses/Error404"
+          "500": {
+            "$ref": "#/components/responses/500"
           }
         }
       }
@@ -414,83 +115,115 @@
       }
     },
     "schemas": {
-      "ContactSchema": {
+      "recipe": {
         "type": "object",
-        "required": ["_id", "name", "phoneNumber", "email", "contactType"],
+        "required": [
+          "_id",
+          "title",
+          "category",
+          "owner",
+          "area",
+          "instructions",
+          "description",
+          "thumb",
+          "time",
+          "ingredients",
+          "createdAt",
+          "updatedAt"
+        ],
         "properties": {
           "_id": {
+            "description": "Recipe id",
             "type": "string",
-            "example": "64c4f2a5a2b5c7d9f8e4a123"
+            "example": "65e4decdd286b30065d54af9"
           },
-          "name": {
+          "title": {
+            "description": "Recipe name",
             "type": "string",
-            "example": "John Doe"
+            "example": "BBQ Pork Sloppy Joes"
           },
-          "email": {
+          "category": {
+            "description": "Recipe category",
             "type": "string",
-            "format": "email",
-            "example": "john.doe@example.com"
+            "example": "Soup"
           },
-          "phoneNumber": {
+          "owner": {
             "type": "string",
-            "example": "+380981234567"
+            "description": "User ID",
+            "example": "64d1b8a7e43d5c001fbc2e91"
           },
-          "favorite": {
-            "type": "boolean",
-            "example": true
-          },
-          "contactType": {
+          "area": {
+            "description": "Recipe area",
             "type": "string",
-            "enum": ["work", "home", "personal"],
-            "example": "personal"
+            "example": "American"
           },
-          "photo": {
+          "instructions": {
+            "description": "Recipe instructions",
             "type": "string",
-            "format": "uri",
-            "example": "https://example.com/photos/john.jpg"
-          }
-        }
-      },
-      "Error404": {
-        "description": "Not found",
-        "content": {
-          "application/json": {
-            "schema": {
+            "example": "Boil water, add beetroot, cabbage, potatoes..."
+          },
+          "description": {
+            "description": "Recipe description",
+            "type": "string",
+            "example": "A classic British cake made with almond sponge cake and covered with marzipan"
+          },
+          "thumb": {
+            "description": "Recipe picture",
+            "type": "string",
+            "example": "https://example.com/images/borscht.jpg"
+          },
+          "time": {
+            "description": "Recipe time cooking",
+            "type": "string",
+            "example": "90 min"
+          },
+          "ingredients": {
+            "description": "Recipe ingredients description",
+            "type": "array",
+            "items": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "id",
+                "measure"
+              ],
               "properties": {
-                "status": {
-                  "type": "integer",
-                  "example": 404
-                },
-                "message": {
+                "id": {
                   "type": "string",
-                  "example": "Contact not found"
+                  "description": "Ingredient ID",
+                  "example": "64d1b8a7e43d5c001fbc2e92"
                 },
-                "data": {
-                  "type": "object",
-                  "required": ["message"],
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Contact not found"
-                    }
-                  }
+                "measure": {
+                  "type": "string",
+                  "example": "200 g"
                 }
               }
             }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-08-08T12:34:56.789Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2023-08-08T13:45:56.789Z"
           }
         }
       }
     },
     "responses": {
-      "Error401": {
-        "description": "Unauthorized",
+      "401": {
+        "description": "Unauthorized error",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -498,15 +231,17 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Session not found"
+                  "example": "UnauthorizedError"
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Session not found"
+                      "example": "Access token expired"
                     }
                   }
                 }
@@ -515,13 +250,17 @@
           }
         }
       },
-      "Error404": {
-        "description": "Not found",
+      "404": {
+        "description": "Not Found",
         "content": {
           "application/json": {
             "schema": {
               "type": "object",
-              "required": ["status", "message", "data"],
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
               "properties": {
                 "status": {
                   "type": "integer",
@@ -529,15 +268,54 @@
                 },
                 "message": {
                   "type": "string",
-                  "example": "Contact not found"
+                  "example": "Not Found"
                 },
                 "data": {
                   "type": "object",
-                  "required": ["message"],
+                  "required": [
+                    "message"
+                  ],
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "Contact not found"
+                      "example": "Recipe not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "status",
+                "message",
+                "data"
+              ],
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "example": 500
+                },
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                },
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Something went wrong"
                     }
                   }
                 }

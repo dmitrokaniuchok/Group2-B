@@ -1,0 +1,76 @@
+type: object
+required:
+  - _id
+  - title
+  - category
+  - owner
+  - area
+  - instructions
+  - description
+  - thumb
+  - time
+  - ingredients
+  - createdAt
+  - updatedAt
+
+properties:
+  _id:
+    description: 'Recipe id'
+    type: string
+    example: '65e4decdd286b30065d54af9'
+  title:
+    description: 'Recipe name'
+    type: string
+    example: 'BBQ Pork Sloppy Joes'
+  category:
+    description: 'Recipe category'
+    type: string
+    example: 'Soup'
+  owner:
+    type: string
+    description: 'User ID'
+    example: '64d1b8a7e43d5c001fbc2e91'
+  area:
+    description: 'Recipe area'
+    type: string
+    example: 'American'
+  instructions:
+    description: 'Recipe instructions'
+    type: string
+    example: 'Boil water, add beetroot, cabbage, potatoes...'
+  description:
+    description: 'Recipe description'
+    type: string
+    example: 'A classic British cake made with almond sponge cake and covered with marzipan'
+  thumb:
+    description: 'Recipe picture'
+    type: string
+    example: 'https://example.com/images/borscht.jpg'
+  time:
+    description: 'Recipe time cooking'
+    type: string
+    example: '90 min'
+  ingredients:
+    description: 'Recipe ingredients description'
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - measure
+      properties:
+        id:
+          type: string
+          description: 'Ingredient ID'
+          example: '64d1b8a7e43d5c001fbc2e92'
+        measure:
+          type: string
+          example: '200 g'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2023-08-08T12:34:56.789Z'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2023-08-08T13:45:56.789Z'

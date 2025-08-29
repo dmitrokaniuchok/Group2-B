@@ -19,6 +19,11 @@ tags:
   - name: Recipes
     description: Recipes operation
 
+paths:
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipe/{recipeId}/get.yaml'
+
 servers:
   - url: http://localhost:5000
   - url: https://group2-b.onrender.com
