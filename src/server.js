@@ -17,7 +17,12 @@ export async function setupServer() {
 
   await initMongoConnection();
 
-  app.use(cors());
+  app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+
+  }
+  ));
   app.use(pino());
   app.use(express.json());
   app.use(cookieParser());

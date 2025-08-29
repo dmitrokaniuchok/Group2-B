@@ -9,9 +9,12 @@ export const registerUser = async (payload) => {
     const user = await User.findOne({
         email: payload.email
     });
-    if (user) throw createHttpError(409, 'Email in use');
+    if (user) {
+        throw createHttpError(409, { errors: ['Email already exists'] });
+    }
 
     const encryptedPassword = await bcrypt.hash(payload.password, 10);
+    
     return await User.create({
         ...payload,
         password: encryptedPassword
@@ -23,12 +26,16 @@ export const loginUser = async (payload) => {
         email: payload.email
     });
     if (!user) {
-        throw createHttpError(401, 'User not found!');
+        throw createHttpError(401, 'User not found!',
+            {errors: ['User with this email not found!']}
+        );
     }
 
     const isEqual = await bcrypt.compare(payload.password, user.password);
     if (!isEqual) {
-        throw createHttpError(401, 'Unauthorized');
+        throw createHttpError(401, 'Unauthorized',
+            {errors: ['Invalid password']}
+        );
     }
     const accessToken = randomBytes(30).toString('base64');
     const refreshToken = randomBytes(30).toString('base64');
