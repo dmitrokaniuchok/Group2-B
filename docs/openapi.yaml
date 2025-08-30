@@ -23,6 +23,35 @@ servers:
   - url: http://localhost:5000
   - url: https://group2-b.onrender.com
 
+paths:
+  /users/current:
+    get:
+      $ref: '../swagger/paths/users/current/get.yaml'
+  /categories:
+    get:
+      $ref: '../swagger/paths/categories.yaml'
+  /ingredients:
+    get:
+      $ref: '../swagger/paths/ingredients.yaml'
+  /recipes:
+    get:
+      $ref: '../swagger/paths/recipe/get_search.yaml'
+
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipe/{recipeId}/get.yaml'
+    post:
+      $ref: '../swagger/paths/recipe/{recipeId}/add_favorite.yaml'
+    delete:
+      $ref: '../swagger/paths/recipe/{recipeId}/delete_favorite.yaml'
+
+  /recipes/my:
+    get:
+      $ref: '../swagger/paths/recipe/get_own.yaml'
+  /recipes/add:
+    post:
+      $ref: '../swagger/paths/recipe/post_resipe.yaml'
+
 components:
   securitySchemes:
     bearerAuth:

@@ -1,0 +1,53 @@
+tags:
+  - Ingredient
+summary: Get all ingredients
+operationId: getAllIngredients
+description: Retrieves a list of all ingredients
+security: []
+responses:
+  '200':
+    description: Successfully retrieved ingredients
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: The identifier of the ingredient
+                    example: '64d2a42f8c1b2e001f4d12cd'
+                  name:
+                    type: string
+                    description: Name of the ingredient
+                    example: 'Tomato'
+                  desc:
+                    type: string
+                    description: Description of the ingredient
+                    example: 'Fresh red Tomato'
+                  img:
+                    type: string
+                    description: URL of the image
+                    example: 'http://example.com/tomato.jpg'
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+  '401':
+    $ref: ../components/responses/401.yaml
+  '404':
+    $ref: ../components/responses/404.yaml
+  '500':
+    $ref: ../components/responses/500.yaml

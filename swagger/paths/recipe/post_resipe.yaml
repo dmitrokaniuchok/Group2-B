@@ -1,0 +1,61 @@
+tags:
+  - Recipes
+summary: Create own recipe
+operationId: createOwnRecipe
+description: 'Create a new recipe by the authenticated user'
+security:
+  - bearerAuth: []
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - title
+          - category
+          - ingredients
+        properties:
+          title:
+            type: string
+            example: 'Chocolate Cake'
+          category:
+            type: string
+            example: 'Dessert'
+          ingredients:
+            type: array
+            items:
+              type: string
+            example: ['2 eggs', '100g sugar']
+          instructions:
+            type: string
+            example: 'Mix all ingredients and bake for 30 minutes.'
+          image:
+            type: string
+            format: binary
+responses:
+  '201':
+    description: 'Recipe created successfully'
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: 'Recipe created successfully!'
+            data:
+              $ref: ../../components/schemas/recipes/addRecipe.yaml
+  '400':
+    $ref: ../../components/responses/400.yaml
+  '401':
+    $ref: ../../components/responses/401.yaml
+  '500':
+    $ref: ../../components/responses/500.yaml

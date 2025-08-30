@@ -1,0 +1,19 @@
+description: Created
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+        - data
+      properties:
+        status:
+          type: integer
+          example: 201
+        message:
+          type: string
+          example: 'Recipe created successfully'
+        data:
+          type: object
+          description: 'Created resource data depends on endpoint'

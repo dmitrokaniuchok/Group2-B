@@ -1,0 +1,39 @@
+tags:
+  - Categories
+summary: Get all categories
+operationId: getAllCategories
+description: Retrieves a list of all categories
+security: []
+responses:
+  '200':
+    description: Successfully retrieved categories
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  _id:
+                    type: string
+                    description: The identifier of the category
+                    example: '64d2a42f8c1b2e001f4d12cd'
+                  name:
+                    type: string
+                    description: Name of the category
+                    example: 'Dessert'
+  '401':
+    $ref: '../components/responses/401.yaml'
+  '404':
+    $ref: '../components/responses/404.yaml'
+  '500':
+    $ref: '../components/responses/500.yaml'

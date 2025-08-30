@@ -1,4 +1,4 @@
-description: Not found
+description: Conflict
 content:
   application/json:
     schema:
@@ -10,10 +10,10 @@ content:
       properties:
         status:
           type: integer
-          example: 404
+          example: 409
         message:
           type: string
-          example: Contact not found
+          example: 'Conflict'
         data:
           type: object
           required:
@@ -21,4 +21,4 @@ content:
           properties:
             message:
               type: string
-              example: Contact not found
+              example: 'User with this email already exists'

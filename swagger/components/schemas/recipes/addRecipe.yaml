@@ -3,27 +3,34 @@ required:
   - title
   - cookingTime
   - category
+  - owner
   - ingredients
   - instructions
 properties:
+  _id:
+    type: string
+    example: '64c8d958249fae54bae90bb9'
   title:
     type: string
     example: 'Chocolate Cake'
   description:
     type: string
-    example: 'A rich chocolate cake'
+    example: 'Delicious homemade chocolate cake'
   cookingTime:
     type: integer
     example: 45
   calories:
     type: integer
-    example: 500
+    example: 320
   category:
     type: string
     example: 'Dessert'
+  owner:
+    type: string
+    description: 'User ID who created the recipe'
+    example: '64c8d958249fae54bae90bb9'
   ingredients:
     type: array
-    description: Array of objects {name, amount}
     items:
       type: object
       required:
@@ -35,11 +42,18 @@ properties:
           example: 'Sugar'
         amount:
           type: string
-          example: '50g'
+          example: '100g'
   instructions:
     type: string
-    example: 'Mix all ingredients and bake at 180°C for 45 min.'
+    example: 'Mix all ingredients and bake for 30 minutes at 180°C.'
   image:
     type: string
-    format: binary
-    description: Photo of the recipe
+    example: 'https://example.com/uploads/recipes/chocolate-cake.jpg'
+  createdAt:
+    type: string
+    format: date-time
+    example: '2025-08-30T12:34:56.000Z'
+  updatedAt:
+    type: string
+    format: date-time
+    example: '2025-08-30T12:40:00.000Z'

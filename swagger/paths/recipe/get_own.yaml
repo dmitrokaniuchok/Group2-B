@@ -1,0 +1,38 @@
+tags:
+  - Recipes
+summary: Get own recipes
+operationId: getOwnRecipes
+description: Retrieves a list of recipes created by the authenticated user.
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully retrieved user's recipes
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'User recipes fetched successfully'
+            data:
+              type: array
+              items:
+                $ref: ../../components/schemas/recipes/Recipe.yaml
+
+  '401':
+    $ref: '../../components/responses/401.yaml'
+
+  '404':
+    $ref: '../../components/responses/404.yaml'
+
+  '500':
+    $ref: '../../components/responses/500.yaml'
