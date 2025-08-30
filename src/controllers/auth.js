@@ -1,5 +1,6 @@
 import { FIFTEEN_MINUTES, ONE_MONTH } from "../constants/index.js";
 import { loginUser, logoutUser, refreshUser, registerUser } from "../services/auth.js";
+import User from "../db/models/User.js";
 
 
 export const registerUserController = async (req, res) => {
@@ -22,11 +23,15 @@ export const loginUserController = async (req, res) => {
         expires: new Date(Date.now() + FIFTEEN_MINUTES)
     });
 
+    const user = await User.findById(session.userId).select("-password -__v -createdAt -updatedAt");
+
     res.status(200).json({
         status: 200,
         message: "Successfully logged in an user!",
         data: {
-            accessToken: session.accessToken
+            accessToken: session.accessToken,
+            refreshUser: session.refreshToken,
+            user
         }
     });
 };
