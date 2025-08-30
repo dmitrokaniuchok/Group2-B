@@ -15,10 +15,20 @@ export const registerUser = async (payload) => {
 
   const encryptedPassword = await bcrypt.hash(payload.password, 10);
 
-  return await User.create({
+  const newUser = await User.create({
     ...payload,
     password: encryptedPassword,
   });
+  const newSession = createSession();
+  await SessionCollection.create({
+    userId: newUser._id,
+    ...newSession,
+  });
+  return {
+    ...newUser._doc,
+    accessToken: newSession.accessToken,
+    refreshToken: newSession.refreshToken,
+  };
 };
 
 export const loginUser = async (payload) => {
