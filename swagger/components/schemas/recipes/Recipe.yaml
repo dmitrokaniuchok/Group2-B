@@ -1,0 +1,50 @@
+type: object
+required:
+  - title
+  - category
+  - area
+  - instructions
+  - description
+  - ingredients
+properties:
+  title:
+    type: string
+    example: 'Spaghetti Bolognese'
+  category:
+    type: string
+    example: 'Main Course'
+  owner:
+    type: string
+    format: objectId
+    example: '64c8d958249fae54bae90bb9'
+  area:
+    type: string
+    example: 'Italian'
+  instructions:
+    type: string
+    example: 'Cook pasta, prepare sauce, mix together.'
+  description:
+    type: string
+    example: 'Classic Italian pasta with meat sauce.'
+  thumb:
+    type: string
+    format: uri
+    example: 'https://example.com/spaghetti.jpg'
+  time:
+    type: string
+    example: '30 min'
+  ingredients:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+        - measure
+      properties:
+        id:
+          type: string
+          description: Ingredient ID
+          example: '640c2dd963a319ea671e3818'
+        measure:
+          type: string
+          example: '200g'

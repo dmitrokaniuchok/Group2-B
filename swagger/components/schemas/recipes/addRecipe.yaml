@@ -1,0 +1,45 @@
+type: object
+required:
+  - title
+  - cookingTime
+  - category
+  - ingredients
+  - instructions
+properties:
+  title:
+    type: string
+    example: 'Chocolate Cake'
+  description:
+    type: string
+    example: 'A rich chocolate cake'
+  cookingTime:
+    type: integer
+    example: 45
+  calories:
+    type: integer
+    example: 500
+  category:
+    type: string
+    example: 'Dessert'
+  ingredients:
+    type: array
+    description: Array of objects {name, amount}
+    items:
+      type: object
+      required:
+        - name
+        - amount
+      properties:
+        name:
+          type: string
+          example: 'Sugar'
+        amount:
+          type: string
+          example: '50g'
+  instructions:
+    type: string
+    example: 'Mix all ingredients and bake at 180°C for 45 min.'
+  image:
+    type: string
+    format: binary
+    description: Photo of the recipe
