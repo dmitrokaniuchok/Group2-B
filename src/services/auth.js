@@ -1,9 +1,13 @@
 import createHttpError from 'http-errors';
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
-import { randomBytes } from 'crypto';
 import { SessionCollection } from '../models/Session.js';
 import { FIFTEEN_MINUTES, ONE_MONTH } from '../constants/index.js';
+import {
+  decodeToken,
+  getAccessToken,
+  getRefreshToken,
+} from '../utils/jwtToken.js';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({
@@ -19,7 +23,8 @@ export const registerUser = async (payload) => {
     ...payload,
     password: encryptedPassword,
   });
-  const newSession = createSession();
+  const newSession = createSession({ user: newUser });
+
   await SessionCollection.create({
     userId: newUser._id,
     ...newSession,
@@ -47,21 +52,18 @@ export const loginUser = async (payload) => {
       errors: ['Invalid password'],
     });
   }
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+
+  const newSession = createSession({ user });
 
   return await SessionCollection.create({
     userId: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
+    ...newSession,
   });
 };
 
-const createSession = () => {
-  const accessToken = randomBytes(30).toString('base64');
-  const refreshToken = randomBytes(30).toString('base64');
+const createSession = ({ user }) => {
+  const accessToken = getAccessToken({ email: user.email });
+  const refreshToken = getRefreshToken({ email: user.email });
   return {
     accessToken,
     refreshToken,
@@ -85,7 +87,9 @@ export const refreshUser = async ({ sessionId, refreshToken }) => {
     throw createHttpError(401, 'Session token expired');
   }
 
-  const newSession = createSession();
+  const decoded = decodeToken(refreshToken);
+  
+  const newSession = createSession({user:{email:decoded.email}});
   await SessionCollection.deleteOne({
     userId: session.userId,
     refreshToken,
