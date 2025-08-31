@@ -1,4 +1,4 @@
-import { FIFTEEN_MINUTES, ONE_MONTH } from '../constants/index.js';
+import { ONE_DAY, ONE_MONTH } from '../constants/index.js';
 import {
   loginUser,
   logoutUser,
@@ -24,7 +24,7 @@ export const loginUserController = async (req, res) => {
   });
   res.cookie('sessionId', session._id, {
     httpOnly: true,
-    expires: new Date(Date.now() + FIFTEEN_MINUTES),
+    expires: new Date(Date.now() + ONE_DAY),
   });
 
   const user = await User.findById(session.userId).select(

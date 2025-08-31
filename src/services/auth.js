@@ -1,8 +1,14 @@
 import createHttpError from 'http-errors';
 import User from '../models/User.js';
 import bcrypt from 'bcrypt';
+
 import { SessionCollection } from '../models/Session.js';
 import { ONE_DAY, ONE_MONTH } from '../constants/index.js';
+import {
+  decodeToken,
+  getAccessToken,
+  getRefreshToken,
+} from '../utils/jwtToken.js';
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({
@@ -18,6 +24,7 @@ export const registerUser = async (payload) => {
     ...payload,
     password: encryptedPassword,
   });
+
   const newSession = createSession({ user: newUser });
 
   await SessionCollection.create({
@@ -52,10 +59,7 @@ export const loginUser = async (payload) => {
 
   return await SessionCollection.create({
     userId: user._id,
-    accessToken,
-    refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
-    refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
+    ...newSession,
   });
 };
 
@@ -65,7 +69,7 @@ const createSession = ({ user }) => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
     refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
   };
 };
