@@ -15,4 +15,3 @@ export const getIngredientController = async (req, res) => {
   });
 };
 
-// +

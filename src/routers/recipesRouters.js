@@ -17,5 +17,3 @@ router.get('/my', authentication, ctrlWrapper(getOwnRecipesController));
 router.get('/:recipeId', isValidIdRecipe, ctrlWrapper(getRecipeByIdController));
 
 export default router;
-
-// +

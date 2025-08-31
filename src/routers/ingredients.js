@@ -9,4 +9,3 @@ router.get('/', ctrlWrapper(getIngredientController));
 
 export default router;
 
-// +

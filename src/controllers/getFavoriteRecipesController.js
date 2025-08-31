@@ -2,7 +2,8 @@ import { getFavoriteRecipesService } from '../services/getFavoritesRecipeService
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 const getFavoriteRecipesController = async (req, res) => {
-  const favourites = await getFavoriteRecipesService(req.user._id);
+  const { page = 1, limit = 12 } = req.query;
+  const favourites = await getFavoriteRecipesService(req.user._id, page, limit);
 
   res.status(200).json({
     status: 200,
