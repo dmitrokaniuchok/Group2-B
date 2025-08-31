@@ -3,12 +3,6 @@ import User from '../models/User.js';
 import bcrypt from 'bcrypt';
 import { SessionCollection } from '../models/Session.js';
 import { ONE_DAY, ONE_MONTH } from '../constants/index.js';
-import {
-  decodeToken,
-  getAccessToken,
-  getRefreshToken,
-} from '../utils/jwtToken.js';
-
 
 export const registerUser = async (payload) => {
   const user = await User.findOne({
@@ -58,7 +52,10 @@ export const loginUser = async (payload) => {
 
   return await SessionCollection.create({
     userId: user._id,
-    ...newSession,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
+    refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
   });
 };
 
@@ -68,7 +65,7 @@ const createSession = ({ user }) => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + ONE_DAY),
+    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
     refreshTokenValidUntil: new Date(Date.now() + ONE_MONTH),
   };
 };
@@ -89,8 +86,8 @@ export const refreshUser = async ({ sessionId, refreshToken }) => {
   }
 
   const decoded = decodeToken(refreshToken);
-  
-  const newSession = createSession({user:{email:decoded.email}});
+
+  const newSession = createSession({ user: { email: decoded.email } });
   await SessionCollection.deleteOne({
     userId: session.userId,
     refreshToken,
