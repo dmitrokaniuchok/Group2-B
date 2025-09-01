@@ -18,7 +18,6 @@ export const getFavoriteRecipesService = async (
 
   await user.populate({
     path: 'favorites',
-    select: '_id title category thumb',
     options: {
       skip,
       limit: limitNumber,
