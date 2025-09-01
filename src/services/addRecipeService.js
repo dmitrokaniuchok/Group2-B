@@ -1,5 +1,7 @@
 import createHttpError from 'http-errors';
 import AddRecipe from '../models/AddRecipe.js';
+import path from 'path';
+import fs from 'fs';
 
 export const addRecipeService = async ({ body, file, userId }) => {
   const {
@@ -29,7 +31,18 @@ export const addRecipeService = async ({ body, file, userId }) => {
     }
   }
 
-  const imageUrl = file ? file.path : undefined;
+  let imageUrl;
+  if (file) {
+    const uploadsDir = path.join(process.cwd(), 'uploads', 'recipes');
+    if (!fs.existsSync(uploadsDir))
+      fs.mkdirSync(uploadsDir, { recursive: true });
+
+    const fileName = `${Date.now()}_${file.originalname}`;
+    const filePath = path.join(uploadsDir, fileName);
+
+    fs.writeFileSync(filePath, file.buffer);
+    imageUrl = `/uploads/recipes/${fileName}`;
+  }
 
   const newRecipe = await AddRecipe.create({
     title,
