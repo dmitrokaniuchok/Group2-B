@@ -1,0 +1,27 @@
+tags:
+  - Auth
+summary: Refresh tokens
+operationId: refreshTokens
+description: Get new access and refresh tokens
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - refreshToken
+        properties:
+          refreshToken:
+            type: string
+            example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+responses:
+  '200':
+    description: Tokens refreshed successfully
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/token.yaml
+  '403':
+    description: Invalid or expired refresh token

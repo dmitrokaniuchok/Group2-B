@@ -1,0 +1,21 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: Authenticate a user
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/login.yaml
+responses:
+  '200':
+    description: Successfully logged in
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/token.yaml
+  '401':
+    description: Invalid credentials

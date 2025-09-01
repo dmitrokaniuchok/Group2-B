@@ -1,0 +1,23 @@
+tags:
+  - Auth
+summary: Register user
+operationId: registerUser
+description: Create a new user
+security: []
+requestBody:
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: ../../../components/schemas/register.yaml
+responses:
+  '201':
+    description: User successfully registered
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/schemas/register.yaml
+  '400':
+    description: Validation error
+  '409':
+    description: Email already exists

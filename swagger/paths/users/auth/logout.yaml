@@ -1,0 +1,12 @@
+tags:
+  - Auth
+summary: Logout user
+operationId: logoutUser
+description: Invalidate refresh token and logout
+security:
+  - bearerAuth: []
+responses:
+  '200':
+    description: Successfully logged out
+  '401':
+    description: Unauthorized

@@ -20,10 +20,22 @@ tags:
     description: Recipes operation
 
 servers:
-  - url: http://localhost:5000
   - url: https://group2-b.onrender.com
 
 paths:
+  /auth/register:
+    post:
+      $ref: '../swagger/paths/users/auth/register.yaml'
+  /auth/login:
+    post:
+      $ref: '../swagger/paths/users/auth/login.yaml'
+  /user/refresh:
+    post:
+      $ref: '../swagger/paths/users/auth/refresh.yaml'
+  /user/logout:
+    post:
+      $ref: '../swagger/paths/users/auth/logout.yaml'
+
   /users/current:
     get:
       $ref: '../swagger/paths/users/current/get.yaml'
