@@ -50,7 +50,7 @@ export const addRecipeService = async ({ body, file, userId }) => {
     time: cookingTime,
     area,
     category,
-    ingredients: ingArray,
+    ingredients,
     instructions,
     thumb: imageUrl || null,
     owner: userId,
