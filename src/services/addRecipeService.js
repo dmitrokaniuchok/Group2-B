@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import AddRecipe from '../models/AddRecipe.js';
+import Recipes from '../models/Recipe.js';
 import path from 'path';
 import fs from 'fs';
 
@@ -8,7 +8,7 @@ export const addRecipeService = async ({ body, file, userId }) => {
     title,
     description,
     cookingTime,
-    calories,
+    area,
     category,
     ingredients,
     instructions,
@@ -44,15 +44,15 @@ export const addRecipeService = async ({ body, file, userId }) => {
     imageUrl = `/uploads/recipes/${fileName}`;
   }
 
-  const newRecipe = await AddRecipe.create({
+  const newRecipe = await Recipes.create({
     title,
     description,
-    cookingTime,
-    calories,
+    time: cookingTime,
+    area,
     category,
     ingredients: ingArray,
     instructions,
-    image: imageUrl,
+    thumb: imageUrl || null,
     owner: userId,
   });
 
