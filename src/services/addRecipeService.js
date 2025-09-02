@@ -26,8 +26,8 @@ export const addRecipeService = async ({ body, file, userId }) => {
   }
 
   for (const ingredient of ingArray) {
-    if (!ingredient.name || !ingredient.amount) {
-      throw createHttpError(400, 'Each ingredient must have name and amount');
+    if (!ingredient.id || !ingredient.measure) {
+      throw createHttpError(400, 'Each ingredient must have id and measure');
     }
   }
 
@@ -50,7 +50,7 @@ export const addRecipeService = async ({ body, file, userId }) => {
     time: cookingTime,
     area,
     category,
-    ingredients,
+    ingredients: ingArray,
     instructions,
     thumb: imageUrl || null,
     owner: userId,
