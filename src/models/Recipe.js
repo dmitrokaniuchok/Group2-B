@@ -16,7 +16,7 @@ const recipesSchema = new Schema(
     },
     area: {
       type: String,
-      required: true,
+      required: false,
     },
     instructions: {
       type: String,
