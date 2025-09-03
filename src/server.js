@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
 import cookieParser from 'cookie-parser';
-import path from 'path';
+// import path from 'path';
 
 import { initMongoConnection } from './db/initMongoConnection.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
@@ -20,7 +20,7 @@ export async function setupServer() {
 
   app.use(
     cors({
-      origin: 'http://localhost:5173',
+      origin: ['http://localhost:5173', 'https://group2-b.onrender.com'],
       credentials: true,
     }),
   );
@@ -31,7 +31,7 @@ export async function setupServer() {
 
   app.use('/api-docs', swaggerDocs());
 
-  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+  // app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
   app.use('/', router);
 
