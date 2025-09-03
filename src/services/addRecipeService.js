@@ -1,7 +1,5 @@
 import createHttpError from 'http-errors';
 import Recipes from '../models/Recipe.js';
-import path from 'path';
-import fs from 'fs';
 
 export const addRecipeService = async ({ body, file, userId }) => {
   const {
@@ -30,18 +28,11 @@ export const addRecipeService = async ({ body, file, userId }) => {
       throw createHttpError(400, 'Each ingredient must have id and measure');
     }
   }
+  
 
-  let imageUrl;
+  let imageUrl = null;
   if (file) {
-    const uploadsDir = path.join(process.cwd(), 'uploads', 'recipes');
-    if (!fs.existsSync(uploadsDir))
-      fs.mkdirSync(uploadsDir, { recursive: true });
-
-    const fileName = `${Date.now()}_${file.originalname}`;
-    const filePath = path.join(uploadsDir, fileName);
-
-    fs.writeFileSync(filePath, file.buffer);
-    imageUrl = `/uploads/recipes/${fileName}`;
+    imageUrl = file.path;
   }
 
   const newRecipe = await Recipes.create({
@@ -52,9 +43,10 @@ export const addRecipeService = async ({ body, file, userId }) => {
     category,
     ingredients: ingArray,
     instructions,
-    thumb: imageUrl || null,
+    thumb: imageUrl,
     owner: userId,
   });
+
 
   return newRecipe;
 };
