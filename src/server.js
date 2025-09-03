@@ -31,10 +31,8 @@ export async function setupServer() {
 
   app.use('/api-docs', swaggerDocs());
 
-  // Файли з папки uploads
   app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-  // Підключення всіх маршрутів
   app.use('/', router);
 
   app.use(notFoundHandler);

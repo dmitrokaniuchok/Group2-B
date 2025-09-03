@@ -15,6 +15,7 @@ export const registerUserController = async (req, res) => {
     data: user,
   });
 };
+
 export const loginUserController = async (req, res) => {
   const session = await loginUser(req.body);
 
