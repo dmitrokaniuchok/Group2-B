@@ -2,7 +2,7 @@ import express from 'express';
 import { addRecipe } from '../controllers/AddRecipeController.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { authentication } from '../middlewares/Authentication.js';
-import { upload } from '../middlewares/upload.js';
+import { upload } from '../middlewares/uploads.js';
 
 const router = express.Router();
 
