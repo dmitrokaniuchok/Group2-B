@@ -21,7 +21,7 @@ export async function setupServer() {
     cors({
       origin: [
         'http://localhost:5173',
-        'https://tasteorama-steel.vercel.app/',
+        'https://tasteorama-steel.vercel.app',
         'https://group2-b.onrender.com',
       ],
       credentials: true,
