@@ -14,10 +14,6 @@ const recipesSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    calories: {
-      type: Number,
-      required: false,
-    },
     area: {
       type: String,
       required: false,
